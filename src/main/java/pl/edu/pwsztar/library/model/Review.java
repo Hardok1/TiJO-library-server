@@ -30,10 +30,10 @@ public class Review {
 
     @NotNull
     @Basic
-    private String review;
+    private String content;
 
     @NotNull
-    @Column(name = "date")
+    @Column
     @Temporal(TemporalType.DATE)
     private java.util.Date date;
 
