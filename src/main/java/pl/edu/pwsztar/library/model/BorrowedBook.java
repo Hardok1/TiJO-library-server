@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name = "borrowed_book")
-public class BorrowedBooks {
+public class BorrowedBook {
 
     @Id
     @GeneratedValue
@@ -25,11 +25,11 @@ public class BorrowedBooks {
     private BookCopy bookCopy;
 
     @NotNull
-    @Column(name = "rent_date")
+    @Column(name = "borrow_date")
     @Temporal(TemporalType.DATE)
-    private java.util.Date rentDate;
+    private java.util.Calendar borrowDate;
 
     @Column(name = "return_date")
     @Temporal(TemporalType.DATE)
-    private java.util.Date returnDate;
+    private java.util.Calendar returnDate;
 }

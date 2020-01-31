@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
-
 @Entity
 @Table(name = "account")
 public class Account {
@@ -58,34 +57,4 @@ public class Account {
     @NotNull
     @Column(name = "phone_number")
     private String phoneNumber;
-
-    /*public Account(Long id, @NotNull String login, @NotNull String password, @NotNull String name, @NotNull String lastName, @NotNull String email, @NotNull String userType, @NotNull String place, @NotNull String street, @NotNull String homeNumber, @NotNull String phoneNumber) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.userType = userType;
-        this.place = place;
-        this.street = street;
-        this.homeNumber = homeNumber;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Account(@NotNull String login, @NotNull String password, @NotNull String name, @NotNull String lastName, @NotNull String email, @NotNull String userType, @NotNull String place, @NotNull String street, @NotNull String homeNumber, @NotNull String phoneNumber) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.userType = userType;
-        this.place = place;
-        this.street = street;
-        this.homeNumber = homeNumber;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Account() {
-    }*/
 }

@@ -35,6 +35,6 @@ public class Review {
     @NotNull
     @Column
     @Temporal(TemporalType.DATE)
-    private java.util.Date date;
+    private java.util.Calendar date;
 
 }

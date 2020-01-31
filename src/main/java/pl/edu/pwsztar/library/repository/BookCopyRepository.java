@@ -5,8 +5,11 @@ import org.springframework.stereotype.Repository;
 import pl.edu.pwsztar.library.model.Book;
 import pl.edu.pwsztar.library.model.BookCopy;
 
+import java.util.Optional;
+
 @Repository
 public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
 
     Long countByBook(Book book);
+    Optional<BookCopy> findFirstByBookAndBorrowed(Book book, boolean borrowed);
 }

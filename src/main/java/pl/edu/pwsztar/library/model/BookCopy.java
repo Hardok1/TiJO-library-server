@@ -1,9 +1,13 @@
 package pl.edu.pwsztar.library.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "book_copy")
 public class BookCopy {
@@ -18,5 +22,5 @@ public class BookCopy {
 
     @NotNull
     @Column(name = "is_borrowed")
-    private boolean isBorrowed;
+    private boolean borrowed;
 }

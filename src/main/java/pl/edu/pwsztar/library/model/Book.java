@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,20 +34,26 @@ public class Book {
     @Column
     private Double price;
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    private java.util.Date date;
-
     @ManyToMany
     @JoinColumn
-    private Collection<Author> author = new ArrayList<>();
+    private List<Author> author = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "book_copy")
-    private Collection<BookCopy> bookCopy = new ArrayList<>();
+    private List<BookCopy> bookCopy = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "review")
-    private Collection<Review> review = new ArrayList<>();
+    private List<Review> review = new ArrayList<>();
 
+    public Book() {
+    }
+
+    public Book(String name, String description, String bookImageUrl, Double price, List<Author> authors) {
+        this.name = name;
+        this.description = description;
+        this.bookImageUrl = bookImageUrl;
+        this.price = price;
+        this.author = authors;
+    }
 }

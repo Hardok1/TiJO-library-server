@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,5 +24,5 @@ public class Author {
 
     @ManyToMany
     @JoinColumn
-    private Collection<Book> book = new ArrayList<>();
+    private List<Book> book = new ArrayList<>();
 }
