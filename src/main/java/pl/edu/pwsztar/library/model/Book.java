@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "book")
+@Table
 public class Book {
 
     @GeneratedValue
@@ -23,7 +23,7 @@ public class Book {
     private String name;
 
     @NotNull
-    @Column(name = "book_image_url")
+    @Column
     private String bookImageUrl;
 
     @NotNull
@@ -39,11 +39,11 @@ public class Book {
     private List<Author> author = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name = "book_copy")
+    @JoinColumn
     private List<BookCopy> bookCopy = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name = "review")
+    @JoinColumn
     private List<Review> review = new ArrayList<>();
 
     public Book() {

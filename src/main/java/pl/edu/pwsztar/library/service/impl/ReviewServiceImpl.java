@@ -41,6 +41,11 @@ public class ReviewServiceImpl implements ReviewService {
         Optional<Account> account = accountRepository.findById(accountId);
         Optional<Book> book = bookRepository.findById(bookId);
         if (account.isPresent() && book.isPresent()) {
+            for (Review review : getReviewsForBook(bookId)){
+                if (review.getAccount().equals(account.get())){
+                    return false;
+                }
+            }
             Review review = new Review();
             review.setAccount(account.get());
             review.setBook(book.get());

@@ -5,18 +5,23 @@ import org.springframework.stereotype.Service;
 import pl.edu.pwsztar.library.exception.InvalidAuthorException;
 import pl.edu.pwsztar.library.model.Author;
 import pl.edu.pwsztar.library.repository.AuthorRepository;
+import pl.edu.pwsztar.library.service.AccountService;
 import pl.edu.pwsztar.library.service.AuthorService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
     final AuthorRepository authorRepository;
+    final AccountService accountService;
+
 
     @Autowired
-    public AuthorServiceImpl(AuthorRepository authorRepository) {
+    public AuthorServiceImpl(AuthorRepository authorRepository, AccountService accountService) {
         this.authorRepository = authorRepository;
+        this.accountService = accountService;
     }
 
     @Override
@@ -29,11 +34,20 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public boolean addAuthor(String authorName) {
-        Author author = new Author();
-        author.setAuthorName(authorName);
-        authorRepository.save(author);
-        return true;
+    public boolean addAuthor(String authorName, Long accountId) {
+        if (accountService.isAdmin(accountId)){
+            Author author = new Author();
+            author.setAuthorName(authorName);
+            authorRepository.save(author);
+            return true;
+        }
+        return false;
     }
+
+    @Override
+    public List<Author> getAllAuthors() {
+        return authorRepository.findAll();
+    }
+
 
 }

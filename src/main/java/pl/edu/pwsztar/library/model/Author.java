@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "author")
+@Table
 public class Author {
 
     @GeneratedValue
@@ -19,7 +19,7 @@ public class Author {
     private Long id;
 
     @NotNull
-    @Column(name = "author_name")
+    @Column
     private String authorName;
 
     @ManyToMany

@@ -3,6 +3,7 @@ package pl.edu.pwsztar.library.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.edu.pwsztar.library.DTO.AccountDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "account")
+@Table
 public class Account {
 
     @Id
@@ -31,7 +32,7 @@ public class Account {
     private String name;
 
     @NotNull
-    @Column(name = "last_name")
+    @Column
     private String lastName;
 
     @NotNull
@@ -39,7 +40,7 @@ public class Account {
     private String email;
 
     @NotNull
-    @Column(name = "user_type")
+    @Column
     private String userType;
 
     @NotNull
@@ -51,10 +52,23 @@ public class Account {
     private String street;
 
     @NotNull
-    @Column(name = "home_number")
+    @Column
     private String homeNumber;
 
     @NotNull
-    @Column(name = "phone_number")
+    @Column
     private String phoneNumber;
+
+    public Account(@NotNull AccountDTO accountDTO) {
+        this.login = accountDTO.getLogin();
+        this.password = accountDTO.getPassword();
+        this.name = accountDTO.getName();
+        this.lastName = accountDTO.getLastName();
+        this.email = accountDTO.getEmail();
+        this.place = accountDTO.getPlace();
+        this.street = accountDTO.getStreet();
+        this.homeNumber = accountDTO.getHomeNumber();
+        this.phoneNumber = accountDTO.getPhoneNumber();
+        this.userType = "user";
+    }
 }

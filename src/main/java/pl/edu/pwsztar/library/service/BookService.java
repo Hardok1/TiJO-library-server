@@ -12,7 +12,7 @@ public interface BookService {
 
     List<Book> getTop10Books();
 
-    boolean addBook(String name, String description, String bookImageUrl, Double price, List<Long> authorId, int quantity);
+    boolean addBook(String name, String description, String bookImageUrl, Double price, List<Long> authorId, int quantity, Long accountId);
 
-    boolean editBook(Long bookId, String name, String description, String bookImageUrl, Double price, List<Long> authorsId);
+    boolean editBook(Long bookId, String name, String description, String bookImageUrl, Double price, List<Long> authorsId, Long accountId);
 }

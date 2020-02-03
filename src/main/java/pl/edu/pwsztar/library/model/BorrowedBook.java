@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Entity
-@Table(name = "borrowed_book")
+@Table
 public class BorrowedBook {
 
     @Id
@@ -17,19 +17,19 @@ public class BorrowedBook {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
+    @JoinColumn
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name = "book_copy_id")
+    @JoinColumn
     private BookCopy bookCopy;
 
     @NotNull
-    @Column(name = "borrow_date")
+    @Column
     @Temporal(TemporalType.DATE)
     private java.util.Calendar borrowDate;
 
-    @Column(name = "return_date")
+    @Column
     @Temporal(TemporalType.DATE)
     private java.util.Calendar returnDate;
 }

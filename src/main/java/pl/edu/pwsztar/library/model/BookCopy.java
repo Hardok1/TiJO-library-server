@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Entity
-@Table(name = "book_copy")
+@Table
 public class BookCopy {
 
     @GeneratedValue
@@ -17,10 +17,10 @@ public class BookCopy {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn
     private Book book;
 
     @NotNull
-    @Column(name = "is_borrowed")
+    @Column
     private boolean borrowed;
 }
