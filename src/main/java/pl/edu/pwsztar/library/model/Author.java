@@ -23,6 +23,5 @@ public class Author {
     private String authorName;
 
     @ManyToMany
-    @JoinColumn
     private List<Book> book = new ArrayList<>();
 }

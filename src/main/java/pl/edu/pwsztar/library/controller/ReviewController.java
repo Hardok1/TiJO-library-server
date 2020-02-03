@@ -32,8 +32,8 @@ public class ReviewController {
 
 
     @GetMapping("{bookId}")
-    public ResponseEntity<List<Review>> getReviewsForBook(@PathVariable("bookId") String bookId) {
-        List<Review> reviews = reviewService.getReviewsForBook(Long.valueOf(bookId));
+    public ResponseEntity<List<Review>> getReviewsForBook(@PathVariable("bookId") long bookId) {
+        List<Review> reviews = reviewService.getReviewsForBook(bookId);
         if (reviews.size() > 0) {
             return new ResponseEntity<>(reviews, HttpStatus.OK);
         }
