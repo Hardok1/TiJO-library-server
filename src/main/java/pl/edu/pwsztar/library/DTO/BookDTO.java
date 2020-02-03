@@ -1,5 +1,6 @@
 package pl.edu.pwsztar.library.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class BookDTO {
     private String description;
     private Double price;
     private double averageGrade;
-    private List<Author> authors;
+    @JsonIgnoreProperties("book")
+    private List<Author> author;
 }

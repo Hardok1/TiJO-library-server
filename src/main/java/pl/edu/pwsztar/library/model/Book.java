@@ -1,5 +1,6 @@
 package pl.edu.pwsztar.library.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,7 +35,8 @@ public class Book {
     @Column
     private Double price;
 
-    @ManyToMany
+    @JsonIgnoreProperties("book")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn
     private List<Author> author = new ArrayList<>();
 

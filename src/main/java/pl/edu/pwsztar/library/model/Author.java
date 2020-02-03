@@ -1,5 +1,6 @@
 package pl.edu.pwsztar.library.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,8 @@ public class Author {
     @Column
     private String authorName;
 
-    @ManyToMany(mappedBy="author")
+    @JsonIgnoreProperties("author")
+    @ManyToMany(mappedBy="author",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Book> book = new ArrayList<>();
 }

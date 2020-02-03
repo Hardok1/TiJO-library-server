@@ -5,11 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pwsztar.library.DTO.AddAuthorDTO;
+import pl.edu.pwsztar.library.DTO.AuthorDTO;
 import pl.edu.pwsztar.library.DTO.AuthorNameDTO;
 import pl.edu.pwsztar.library.exception.InvalidAuthorException;
 import pl.edu.pwsztar.library.model.Author;
 import pl.edu.pwsztar.library.service.AuthorService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,8 +43,12 @@ public class AuthorController {
     }
 
     @GetMapping("getAuthors")
-    public ResponseEntity<List<Author>> getAuthorsList(){
-        return new ResponseEntity<>(authorService.getAllAuthors(), HttpStatus.OK);
+    public ResponseEntity<List<AuthorDTO>> getAuthorsList(){
+        List<AuthorDTO> authorDTOList = new ArrayList<>();
+        for (Author author : authorService.getAllAuthors()){
+            authorDTOList.add(new AuthorDTO(author.getId(),author.getAuthorName()));
+        }
+        return new ResponseEntity<>(authorDTOList, HttpStatus.OK);
     }
 
 
