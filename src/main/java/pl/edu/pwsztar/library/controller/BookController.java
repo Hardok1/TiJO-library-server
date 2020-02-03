@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.pwsztar.library.DTO.BookAddDTO;
 import pl.edu.pwsztar.library.DTO.BookDTO;
 import pl.edu.pwsztar.library.DTO.BookEditDTO;
+import pl.edu.pwsztar.library.DTO.MyBooksDTO;
 import pl.edu.pwsztar.library.model.Book;
 import pl.edu.pwsztar.library.service.BookService;
 import pl.edu.pwsztar.library.service.ReviewService;
@@ -66,6 +67,13 @@ public class BookController {
     @GetMapping("getTop")
     public ResponseEntity<List<BookDTO>> getTop() {
         return getBookDTOList(bookService.getTop10Books());
+    }
+
+    //JESZCZE NIE ZROBIONE
+    @GetMapping("/myBooks/{userId}")
+    public ResponseEntity<List<MyBooksDTO>> getAccountBorrowedBooks(@PathVariable("userId") long userId){
+
+        return null;
     }
 
     @NotNull

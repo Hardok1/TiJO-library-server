@@ -24,14 +24,15 @@ public class BookServiceImpl implements BookService {
     final ReviewService reviewService;
     final AuthorRepository authorRepository;
     final BookCopyService bookCopyService;
-    private AccountService accountService;
+    final AccountService accountService;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, ReviewService reviewService, AuthorRepository authorRepository, BookCopyRepository bookCopyRepository, BookCopyService bookCopyService) {
+    public BookServiceImpl(BookRepository bookRepository, ReviewService reviewService, AuthorRepository authorRepository, BookCopyRepository bookCopyRepository, BookCopyService bookCopyService, AccountService accountService) {
         this.bookRepository = bookRepository;
         this.reviewService = reviewService;
         this.authorRepository = authorRepository;
         this.bookCopyService = bookCopyService;
+        this.accountService = accountService;
     }
 
     @Override
