@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.pwsztar.library.DTO.BookCopiesLeftDTO;
 import pl.edu.pwsztar.library.DTO.CopiesAddDTO;
 import pl.edu.pwsztar.library.exception.InvalidBookException;
 import pl.edu.pwsztar.library.service.BookCopyService;
@@ -20,10 +21,9 @@ public class BookCopyController {
     }
 
     @GetMapping("quantity/{bookId}")
-    public ResponseEntity<Long> getNotBorrowedBookCopiesLeftQuantity(@PathVariable("bookId") long bookId) {
+    public ResponseEntity<BookCopiesLeftDTO> getNotBorrowedBookCopiesLeftQuantity(@PathVariable("bookId") long bookId) {
         try {
-            Long bookCopiesCount = bookCopyService.getBookCopiesQuantity(bookId);
-            return new ResponseEntity<>(bookCopiesCount, HttpStatus.OK);
+            return new ResponseEntity<>(new BookCopiesLeftDTO(bookCopyService.getBookCopiesQuantity(bookId)), HttpStatus.OK);
         } catch (InvalidBookException ibe) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

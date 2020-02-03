@@ -60,11 +60,15 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Integer getAverageGradeForBook(Long bookId) {
-        int gradeSum = 0;
-        for (Review review : getReviewsForBook(bookId)){
-            gradeSum = review.getGrade();
+        try {
+            int gradeSum = 0;
+            for (Review review : getReviewsForBook(bookId)) {
+                gradeSum = review.getGrade();
+            }
+            return gradeSum / getReviewsCountForBook(bookId);
+        } catch (ArithmeticException ae) {
+            return 0;
         }
-        return gradeSum/getReviewsCountForBook(bookId);
     }
 
     @Override
