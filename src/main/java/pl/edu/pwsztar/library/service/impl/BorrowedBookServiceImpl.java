@@ -2,6 +2,7 @@ package pl.edu.pwsztar.library.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.pwsztar.library.DTO.MyBooksDTO;
 import pl.edu.pwsztar.library.exception.BookAlreadyBorrowedException;
 import pl.edu.pwsztar.library.exception.InvalidAccountException;
 import pl.edu.pwsztar.library.exception.InvalidBookException;
@@ -35,12 +36,13 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     }
 
     @Override
-    public List<Book> getAccountBorrowedBooks(Long accountId) {
+    public List<MyBooksDTO> getAccountBorrowedBooks(Long accountId) {
         Optional<Account> account = accountRepository.findById(accountId);
-        List<Book> books = new ArrayList<>();
+        List<MyBooksDTO> books = new ArrayList<>();
         if (account.isPresent()) {
             List<BorrowedBook> borrowedBooks = borrowedBookRepository.findAllByAccount(account.get());
-            borrowedBooks.forEach(borrowedBook -> books.add(borrowedBook.getBookCopy().getBook()));
+            borrowedBooks.forEach(borrowedBook -> books.add(new MyBooksDTO(borrowedBook.getBookCopy().getId(),
+                    borrowedBook.getBookCopy().getBook().getId(), borrowedBook.getBorrowDate())));
         }
         return books;
     }
@@ -100,8 +102,8 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
 
     @Override
     public boolean isBookAlreadyBorrowed(Long accountId, Long bookId) {
-        for (Book borrowedBook : getAccountBorrowedBooks(accountId)) {
-            if (borrowedBook.getId().equals(bookId)) {
+        for (MyBooksDTO borrowedBook : getAccountBorrowedBooks(accountId)) {
+            if (borrowedBook.getBookId() == bookId) {
                 return true;
             }
         }

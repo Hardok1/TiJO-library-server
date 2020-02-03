@@ -11,6 +11,7 @@ import pl.edu.pwsztar.library.DTO.BookEditDTO;
 import pl.edu.pwsztar.library.DTO.MyBooksDTO;
 import pl.edu.pwsztar.library.model.Book;
 import pl.edu.pwsztar.library.service.BookService;
+import pl.edu.pwsztar.library.service.BorrowedBookService;
 import pl.edu.pwsztar.library.service.ReviewService;
 
 import java.util.ArrayList;
@@ -22,11 +23,13 @@ public class BookController {
 
     final BookService bookService;
     final ReviewService reviewService;
+    final BorrowedBookService borrowedBookService;
 
     @Autowired
-    public BookController(BookService bookService, ReviewService reviewService) {
+    public BookController(BookService bookService, ReviewService reviewService, BorrowedBookService borrowedBookService) {
         this.bookService = bookService;
         this.reviewService = reviewService;
+        this.borrowedBookService = borrowedBookService;
     }
 
     @PostMapping("addBook")
@@ -69,11 +72,10 @@ public class BookController {
         return getBookDTOList(bookService.getTop10Books());
     }
 
-    //JESZCZE NIE ZROBIONE
     @GetMapping("/myBooks/{userId}")
     public ResponseEntity<List<MyBooksDTO>> getAccountBorrowedBooks(@PathVariable("userId") long userId){
 
-        return null;
+        return new ResponseEntity<>(borrowedBookService.getAccountBorrowedBooks(userId),HttpStatus.OK);
     }
 
     @NotNull

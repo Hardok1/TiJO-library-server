@@ -1,12 +1,12 @@
 package pl.edu.pwsztar.library.service;
 
-import pl.edu.pwsztar.library.model.Book;
+import pl.edu.pwsztar.library.DTO.MyBooksDTO;
 
 import java.util.List;
 
 public interface BorrowedBookService {
 
-    List<Book> getAccountBorrowedBooks(Long accountId);
+    List<MyBooksDTO> getAccountBorrowedBooks(Long accountId);
 
     boolean borrowBook(Long accountId, Long bookId);
 
