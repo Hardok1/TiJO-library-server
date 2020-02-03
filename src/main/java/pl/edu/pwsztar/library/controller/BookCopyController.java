@@ -20,15 +20,16 @@ public class BookCopyController {
     }
 
     @GetMapping("quantity/{bookId}")
-    public ResponseEntity<Integer> getBookCopiesQuantity(@PathVariable("bookId") long bookId) {
+    public ResponseEntity<Long> getNotBorrowedBookCopiesLeftQuantity(@PathVariable("bookId") long bookId) {
         try {
-            return new ResponseEntity<>(bookCopyService.getBookCopiesQuantity(bookId).intValue(), HttpStatus.OK);
+            Long bookCopiesCount = bookCopyService.getBookCopiesQuantity(bookId);
+            return new ResponseEntity<>(bookCopiesCount, HttpStatus.OK);
         } catch (InvalidBookException ibe) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
 
-    @GetMapping("addCopies")
+    @PutMapping("addCopies")
     public ResponseEntity<String> addCopies(@RequestBody CopiesAddDTO copiesAddDTO) {
         if (bookCopyService.addNewBookCopies(copiesAddDTO.getBookId(), copiesAddDTO.getQuantity(), copiesAddDTO.getAccountId())){
             return new ResponseEntity<>(HttpStatus.OK);

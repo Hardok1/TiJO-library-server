@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
 
-    Long countByBook(Book book);
+    Long countByBookAndBorrowed(Book book, boolean borrowed);
     Optional<BookCopy> findFirstByBookAndBorrowed(Book book, boolean borrowed);
 }

@@ -30,7 +30,7 @@ public class BookCopyServiceImpl implements BookCopyService {
     public Long getBookCopiesQuantity(Long bookId) throws InvalidBookException {
         Optional<Book> book = bookRepository.findById(bookId);
         if (book.isPresent()){
-            return bookCopyRepository.countByBook(book.get());
+            return bookCopyRepository.countByBookAndBorrowed(book.get(), false);
         }
         throw new InvalidBookException();
     }
