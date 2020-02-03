@@ -22,6 +22,6 @@ public class Author {
     @Column
     private String authorName;
 
-    @ManyToMany
+    @ManyToMany(mappedBy="author")
     private List<Book> book = new ArrayList<>();
 }

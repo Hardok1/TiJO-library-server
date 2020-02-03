@@ -13,6 +13,7 @@ import pl.edu.pwsztar.library.service.BookCopyService;
 import pl.edu.pwsztar.library.service.BookService;
 import pl.edu.pwsztar.library.service.ReviewService;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +35,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getBook(Long id) throws InvalidBookException{
+    public Book getBook(Long id) throws InvalidBookException {
         Optional<Book> book = bookRepository.findById(id);
-        if (book.isPresent()){
+        if (book.isPresent()) {
             return book.get();
         }
         throw new InvalidBookException();
@@ -49,12 +50,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getTop10Books() {
-//        List <Book> books = getAllBooks();
-//
-//        for (Book book : books){
-//
-//        }
-        return null;
+        List<Book> books = getAllBooks();
+        books.sort(Comparator.comparing(book -> reviewService.getAverageGradeForBook(book.getId())));
+        return books.subList(books.size()-10, books.size());
     }
 
     @Override

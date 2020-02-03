@@ -1,5 +1,6 @@
 package pl.edu.pwsztar.library.controller;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,12 +48,7 @@ public class BookController {
 
     @GetMapping("getAll")
     public ResponseEntity<List<BookDTO>> getBooksList() {
-        List<BookDTO> books = new ArrayList<>();
-        for (Book book : bookService.getAllBooks()) {
-            books.add(new BookDTO(book.getId(), book.getName(), book.getBookImageUrl(), book.getDescription(),
-                    book.getPrice(), reviewService.getAverageGradeForBook(book.getId()), book.getAuthor()));
-        }
-        return new ResponseEntity<>(books, HttpStatus.OK);
+        return getBookDTOList(bookService.getAllBooks());
     }
 
     @GetMapping("getBookById/{bookId}")
@@ -62,8 +58,23 @@ public class BookController {
             BookDTO bookDTO = new BookDTO(book.getId(), book.getName(), book.getBookImageUrl(), book.getDescription(),
                     book.getPrice(), reviewService.getAverageGradeForBook(bookId), book.getAuthor());
             return new ResponseEntity<>(bookDTO, HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+    }
+
+    @GetMapping("getTop")
+    public ResponseEntity<List<BookDTO>> getTop() {
+        return getBookDTOList(bookService.getTop10Books());
+    }
+
+    @NotNull
+    private ResponseEntity<List<BookDTO>> getBookDTOList(List<Book> books) {
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        for (Book book : books) {
+            bookDTOList.add(new BookDTO(book.getId(), book.getName(), book.getBookImageUrl(), book.getDescription(),
+                    book.getPrice(), reviewService.getAverageGradeForBook(book.getId()), book.getAuthor()));
+        }
+        return new ResponseEntity<>(bookDTOList, HttpStatus.OK);
     }
 }
