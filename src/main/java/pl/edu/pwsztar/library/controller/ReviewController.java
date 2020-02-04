@@ -9,6 +9,7 @@ import pl.edu.pwsztar.library.DTO.ReviewInfoDTO;
 import pl.edu.pwsztar.library.model.Review;
 import pl.edu.pwsztar.library.service.ReviewService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,8 +33,11 @@ public class ReviewController {
 
 
     @GetMapping("{bookId}")
-    public ResponseEntity<List<Review>> getReviewsForBook(@PathVariable("bookId") long bookId) {
-        List<Review> reviews = reviewService.getReviewsForBook(bookId);
+    public ResponseEntity<List<ReviewDTO>> getReviewsForBook(@PathVariable("bookId") long bookId) {
+        List<ReviewDTO> reviews = new ArrayList<>();
+        for (Review review : reviewService.getReviewsForBook(bookId)){
+            reviews.add(new ReviewDTO(review.getAccount().getId(),review.getBook().getId(),review.getGrade(), review.getContent()));
+        }
         if (reviews.size() > 0) {
             return new ResponseEntity<>(reviews, HttpStatus.OK);
         }
