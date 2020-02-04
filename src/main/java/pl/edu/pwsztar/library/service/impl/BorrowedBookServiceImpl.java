@@ -17,6 +17,8 @@ import pl.edu.pwsztar.library.repository.BookRepository;
 import pl.edu.pwsztar.library.repository.BorrowedBookRepository;
 import pl.edu.pwsztar.library.service.BorrowedBookService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -40,9 +42,13 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
         Optional<Account> account = accountRepository.findById(accountId);
         List<MyBooksDTO> books = new ArrayList<>();
         if (account.isPresent()) {
-            List<BorrowedBook> borrowedBooks = borrowedBookRepository.findAllByAccount(account.get());
-            borrowedBooks.forEach(borrowedBook -> books.add(new MyBooksDTO(borrowedBook.getBookCopy().getId(),
-                    borrowedBook.getBookCopy().getBook().getId(), borrowedBook.getBorrowDate())));
+            for (BorrowedBook borrowedBook : borrowedBookRepository.findAllByAccount(account.get())){
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                if (dateFormat.format(borrowedBook.getReturnDate().getTime()).isEmpty()){
+                    books.add(new MyBooksDTO(borrowedBook.getBookCopy().getId(),
+                            borrowedBook.getBookCopy().getBook().getId(), dateFormat.format(borrowedBook.getBorrowDate().getTime())));
+                }
+            }
         }
         return books;
     }
