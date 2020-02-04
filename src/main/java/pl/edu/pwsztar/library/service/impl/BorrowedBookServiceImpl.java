@@ -42,9 +42,9 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
         Optional<Account> account = accountRepository.findById(accountId);
         List<MyBooksDTO> books = new ArrayList<>();
         if (account.isPresent()) {
-            for (BorrowedBook borrowedBook : borrowedBookRepository.findAllByAccount(account.get())){
+            for (BorrowedBook borrowedBook : borrowedBookRepository.findAllByAccount(account.get())) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                if (dateFormat.format(borrowedBook.getReturnDate().getTime()).isEmpty()){
+                if (borrowedBook.getReturnDate() == null) {
                     books.add(new MyBooksDTO(borrowedBook.getBookCopy().getId(),
                             borrowedBook.getBookCopy().getBook().getId(), dateFormat.format(borrowedBook.getBorrowDate().getTime())));
                 }
