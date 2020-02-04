@@ -36,7 +36,8 @@ public class BorrowedBookController {
         return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
-    @PutMapping ResponseEntity<String> returnBorrowedBook(@RequestBody ReturnBookDTO returnBookDTO){
+    @PutMapping("returnBook")
+    public ResponseEntity<String> returnBorrowedBook(@RequestBody ReturnBookDTO returnBookDTO){
         if (borrowedBookService.returnBook(returnBookDTO.getAccountId(),returnBookDTO.getBookCopyId())){
             return new ResponseEntity<>(HttpStatus.OK);
         }
