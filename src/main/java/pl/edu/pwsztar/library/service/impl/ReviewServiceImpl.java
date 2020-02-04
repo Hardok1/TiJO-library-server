@@ -63,7 +63,7 @@ public class ReviewServiceImpl implements ReviewService {
         try {
             int gradeSum = 0;
             for (Review review : getReviewsForBook(bookId)) {
-                gradeSum = review.getGrade();
+                gradeSum += review.getGrade();
             }
             return gradeSum / getReviewsCountForBook(bookId);
         } catch (ArithmeticException ae) {

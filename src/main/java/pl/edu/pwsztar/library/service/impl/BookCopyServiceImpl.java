@@ -40,10 +40,12 @@ public class BookCopyServiceImpl implements BookCopyService {
         if (accountService.isAdmin(accountId)) {
             Optional<Book> book = bookRepository.findById(bookId);
             if (book.isPresent()) {
-                BookCopy bookCopy = new BookCopy();
-                bookCopy.setBook(book.get());
-                bookCopy.setBorrowed(false);
-                bookCopyRepository.save(bookCopy);
+                for (int i = 0; i<quantity; i++) {
+                    BookCopy bookCopy = new BookCopy();
+                    bookCopy.setBook(book.get());
+                    bookCopy.setBorrowed(false);
+                    bookCopyRepository.save(bookCopy);
+                }
             } else {
                 throw new InvalidBookException();
             }
