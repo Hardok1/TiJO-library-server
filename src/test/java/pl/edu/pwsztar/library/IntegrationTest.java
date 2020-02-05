@@ -8,6 +8,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.edu.pwsztar.library.controller.AccountController;
+import pl.edu.pwsztar.library.controller.AuthorController;
+import pl.edu.pwsztar.library.controller.BookController;
+import pl.edu.pwsztar.library.controller.BorrowedBookController;
 import pl.edu.pwsztar.library.model.Account;
 import pl.edu.pwsztar.library.service.AccountService;
 
@@ -22,17 +25,32 @@ public class IntegrationTest {
     AccountController accountController;
 
     @Autowired
+    AuthorController authorController;
+
+    @Autowired
+    BookController bookController;
+
+    @Autowired
+    BorrowedBookController borrowedBookController;
+
+    @Autowired
     AccountService accountService;
 
-    MockMvc mockMvc;
+    MockMvc mockMvcAccount;
+    MockMvc mockMvcAuthor;
+    MockMvc mockMvcBook;
+    MockMvc mockMvcBorrowedBook;
 
     @Test
     public void controllersTest() throws Exception {
-        mockMvc = standaloneSetup(accountController).build();
+        mockMvcAccount = standaloneSetup(accountController).build();
+        mockMvcAuthor = standaloneSetup(authorController).build();
+        mockMvcBook = standaloneSetup(bookController).build();
+        mockMvcBorrowedBook = standaloneSetup(borrowedBookController).build();
         Account admin = accountService.createMockAdmin();
 
         //Creating account
-        ResultActions resultActions = mockMvc.perform(
+        ResultActions resultActions = mockMvcAccount.perform(
                 MockMvcRequestBuilders.post("/account/signup")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -42,7 +60,7 @@ public class IntegrationTest {
 
 
         //Login to account
-        resultActions = mockMvc.perform(
+        resultActions = mockMvcAccount.perform(
                 MockMvcRequestBuilders.post("/account/signin")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -53,21 +71,21 @@ public class IntegrationTest {
                 "    \"password\": \"BB\",\n" +
                 "    \"name\": \"CC\"}"));
 
-        //Add author
-        resultActions = mockMvc.perform(
+        //Add author (adds author with id 3)
+        resultActions = mockMvcAuthor.perform(
                 MockMvcRequestBuilders.post("/authors/addAuthor")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "\t\"authorName\" : \"Andrzej Sapkowski\",\n" +
-                                "\t\"accountId\" : \"0\"\n" +
+                                "\t\"accountId\" : \"" + admin.getId() +"\"\n" +
                                 "}")
         );
         resultActions.andExpect(status().isCreated());
 
         //Add Book
-        resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.post("/authors/addAuthor")
+        resultActions = mockMvcBook.perform(
+                MockMvcRequestBuilders.post("/books/addBook")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
@@ -75,9 +93,9 @@ public class IntegrationTest {
                                 "        \"bookImageUrl\": \"adres url do miniaturki\",\n" +
                                 "        \"description\": \"opis książki\",\n" +
                                 "        \"price\": 20,\n" +
-                                "        \"authors\": [1],\n" +
+                                "        \"authors\": [3],\n" +
                                 "        \"quantity\": 2,\n" +
-                                "\t    \"accountId\": 0\n" +
+                                "\t    \"accountId\": "+admin.getId()+"\n" +
                                 "}")
         );
         resultActions.andExpect(status().isCreated());

@@ -38,7 +38,9 @@ public class AuthorServiceImpl implements AuthorService {
         if (accountService.isAdmin(accountId)){
             Author author = new Author();
             author.setAuthorName(authorName);
-            authorRepository.save(author);
+            Author a = authorRepository.save(author);
+            System.out.println("----------");
+            System.out.println("AUTHOR ID: " + a.getId());
             return true;
         }
         return false;
