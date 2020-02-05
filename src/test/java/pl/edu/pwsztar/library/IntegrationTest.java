@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import pl.edu.pwsztar.library.controller.AccountController;
 import pl.edu.pwsztar.library.controller.AuthorController;
 import pl.edu.pwsztar.library.controller.BookController;
@@ -41,6 +42,7 @@ public class IntegrationTest {
     MockMvc mockMvcBook;
     MockMvc mockMvcBorrowedBook;
 
+    @Transactional
     @Test
     public void controllersTest() throws Exception {
         mockMvcAccount = standaloneSetup(accountController).build();
@@ -78,12 +80,12 @@ public class IntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "\t\"authorName\" : \"Andrzej Sapkowski\",\n" +
-                                "\t\"accountId\" : \"" + admin.getId() +"\"\n" +
+                                "\t\"accountId\" : " + admin.getId() +"\n" +
                                 "}")
         );
         resultActions.andExpect(status().isCreated());
 
-        //Add Book
+        //Add Book (adds book with id 4)
         resultActions = mockMvcBook.perform(
                 MockMvcRequestBuilders.post("/books/addBook")
                         .accept(MediaType.APPLICATION_JSON)
@@ -100,6 +102,17 @@ public class IntegrationTest {
         );
         resultActions.andExpect(status().isCreated());
 
+        //Borrow book
+        resultActions = mockMvcBorrowedBook.perform(
+                MockMvcRequestBuilders.post("/borrowing/rentBook")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "\t    \"accountId\": "+admin.getId()+"\n" +
+                                "\t    \"bookId\": 4,\n" +
+                                "}")
+        );
+        resultActions.andExpect(status().isOk());
 
     }
 

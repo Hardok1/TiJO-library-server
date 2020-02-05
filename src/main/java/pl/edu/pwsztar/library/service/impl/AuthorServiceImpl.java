@@ -39,8 +39,6 @@ public class AuthorServiceImpl implements AuthorService {
             Author author = new Author();
             author.setAuthorName(authorName);
             Author a = authorRepository.save(author);
-            System.out.println("----------");
-            System.out.println("AUTHOR ID: " + a.getId());
             return true;
         }
         return false;

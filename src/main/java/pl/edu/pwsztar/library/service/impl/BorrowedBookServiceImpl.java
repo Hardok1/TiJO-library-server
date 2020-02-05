@@ -69,6 +69,8 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
                         borrowedBookRepository.save(borrowedBook);
                         bookCopy.get().setBorrowed(true);
                         bookCopyRepository.save(bookCopy.get());
+                        System.out.println("----------");
+                        System.out.println(bookCopy.get().getId());
                     } else {
                         throw new NoBooksCopiesLeftException();
                     }

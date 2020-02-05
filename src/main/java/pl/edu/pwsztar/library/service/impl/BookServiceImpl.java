@@ -62,8 +62,6 @@ public class BookServiceImpl implements BookService {
             List<Author> authors = authorRepository.findAllById(authorsId);
             if (authors.size() > 0) {
                 Book book = bookRepository.save(new Book(name, description, bookImageUrl, price, authorRepository.findAllById(authorsId)));
-                System.out.println("----------");
-                System.out.println("BOOK ID: " + book.getId());
                 bookCopyService.addNewBookCopies(book.getId(), quantity, accountId);
                 return true;
             }
