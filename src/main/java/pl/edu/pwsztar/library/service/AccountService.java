@@ -10,4 +10,6 @@ public interface AccountService {
     Account logIn(AccountCredentialsDTO accountCredentialsDTO);
 
     boolean isAdmin(Long accountId);
+
+    Account createMockAdmin();
 }

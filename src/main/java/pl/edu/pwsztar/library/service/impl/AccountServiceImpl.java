@@ -43,4 +43,10 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> account = accountRepository.findById(accountId);
         return account.map(value -> value.getUserType().equals("admin")).orElse(false);
     }
+
+    @Override
+    public Account createMockAdmin() {
+        Account account = new Account(0L, "admin", "admin", "admin", "admin", "admin", "admin", "admin", "admin", "admin", "admin");
+        return accountRepository.save(account);
+    }
 }
