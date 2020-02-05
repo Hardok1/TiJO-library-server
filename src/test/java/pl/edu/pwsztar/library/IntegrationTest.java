@@ -103,16 +103,16 @@ public class IntegrationTest {
         resultActions.andExpect(status().isCreated());
 
         //Borrow book
-//        resultActions = mockMvcBorrowedBook.perform(
-//                MockMvcRequestBuilders.post("/borrowing/rentBook")
-//                        .accept(MediaType.APPLICATION_JSON)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{\n" +
-//                                "\t    \"accountId\": "+admin.getId()+"\n" +
-//                                "\t    \"bookId\": 4,\n" +
-//                                "}")
-//        );
-//        resultActions.andExpect(status().isOk());
+        resultActions = mockMvcBorrowedBook.perform(
+                MockMvcRequestBuilders.post("/borrowing/rentBook")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "\t    \"accountId\": "+admin.getId()+",\n" +
+                                "\t    \"bookId\": 4 \n" +
+                                "}")
+        );
+        resultActions.andExpect(status().isOk());
 
     }
 
